@@ -235,7 +235,7 @@ I implemented three complementary feature importance methods and identified **6 
 7. **device_conn_type** - User connectivity context matters
 
 #### Method-Specific Insights
-- **Tree-based (MDI):** C21, C14, C17, C20, C19, C16, device_conn_type, C18, hour_of_day, C15
+- **Tree-based:** C21, C14, C17, C20, C19, C16, device_conn_type, C18, hour_of_day, C15
 - **Permutation:** C21, C20, C18, banner_pos, C19, site_category features, C14, app_category, C16, device_conn_type
 - **SHAP:** C21, C14, C17, site_category_50e219e0, C20, C18, C19, app_category_0f2161f8, device_conn_type, site_category_28905ebd
 
