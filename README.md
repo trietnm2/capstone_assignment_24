@@ -18,7 +18,7 @@ This project tackles the challenge of predicting click-through rates (CTR) for o
 - Applied proper chronological train-test split and one-hot encoding for robust validation
 - Delivered data-driven business insight sections with quantified ROI projections
 
-**Business Impact:** Implementing the recommendations could improve CTR by 18-36%, reduce cost-per-click by 20-25%, device-banner optimization (25-40% CTR improvement), and tiered targeting (240% ROI for Premium tier).
+**Business Impact:** Implementing the recommendations could improve CTR by 18-36%, device-banner optimization (25-40% CTR improvement), and tiered targeting (240% ROI for Premium tier).
 
 ---
 
