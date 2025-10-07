@@ -156,8 +156,7 @@ Six features appeared in top 10 of ALL three methods:
    - 18,049 parameters, early stopping, 20 epochs
 
 #### Model Optimization
-- **RandomizedSearchCV:** XGBoost with 50 iterations, 3-fold CV
-- **GridSearchCV:** Random Forest (216 combinations), Logistic Regression (24 combinations, 16.21 min)
+- **RandomizedSearchCV:** XGBoost and Random Forest with 50 iterations, 3-fold CV
 - **Cross-Validation:** 3-fold CV to prevent overfitting
 - **Evaluation Metric:** ROC-AUC (handles class imbalance effectively)
 
@@ -193,12 +192,13 @@ Delivered three comprehensive analysis sections:
 
 | Model | ROC-AUC | Key Characteristics |
 |-------|---------|---------------------|
-| **Optimized XGBoost** | **0.6706** | Best performer, tuned with RandomizedSearchCV (50 iter, 1.41 min) |
-| Optimized Random Forest | 0.6657 | GridSearchCV tuning, 216 combinations tested |
+| **Optimized XGBoost** | **0.6706** | Best performer, tuned with RandomizedSearchCV |
+| XGBoost | 0.6690 | XGBoost with imbalance |
+| Optimized Random Forest | 0.6657 | RandomizedSearchCV tuning |
 | Baseline Random Forest | 0.6626 | Strong baseline with default parameters |
 | Neural Network | 0.6579 | 128->64->32->1 architecture, 18,049 parameters |
 | Logistic Regression | 0.6437 | GridSearchCV with L1 penalty, C=100 |
-| LightGBM | 0.6727 | Gradient boosting alternative |
+| **LightGBM** | **0.6727** | Gradient boosting alternative |
 | Naive Bayes | 0.5069 | Probabilistic baseline |
 
 **Best Model:** Optimized XGBoost with **0.6706 ROC-AUC** and LightGBM with **0.6727 ROC-AUC**
