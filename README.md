@@ -220,23 +220,6 @@ Delivered three comprehensive analysis sections:
 
 This performance significantly outperforms random guessing (50% ROC-AUC) and provides meaningful predictive power for ad targeting optimization.
 
-### Feature Importance - Multi-Method Validation
-
-I implemented three complementary feature importance methods and identified **6 consensus features** appearing in top 10 of all methods:
-
-#### Consensus Features
-1. **C21** - #1 in all three methods (tree-based, permutation, SHAP)
-2. **C14** - Top 3 in all methods
-3. **C17** - Consistently high importance
-4. **C20** - Strong across all methods
-5. **C18** - Top 10 in all methods
-6. **C19** - Validated importance
-7. **device_conn_type** - User connectivity context matters
-
-#### Method-Specific Insights
-- **Tree-based:** C21, C14, C17, C20, C19, C16, device_conn_type, C18, hour_of_day, C15
-- **Permutation:** C21, C20, C18, banner_pos, C19, site_category features, C14, app_category, C16, device_conn_type
-- **SHAP:** C21, C14, C17, site_category_50e219e0, C20, C18, C19, app_category_0f2161f8, device_conn_type, site_category_28905ebd
 
 ### Key Findings from Data Analysis
 
@@ -306,23 +289,6 @@ Using ML model scores to segment audiences into 4 tiers:
 - Action: Exclude entirely
 
 **Actionable Insight:** Reallocate budget from Avoid tier to Premium tier for maximum ROI
-
-#### 5. Feature Importance - Cross-Method Validation
-Top predictive features validated across three methods (Tree-based, Permutation, SHAP):
-
-**Consensus Features (Top 10 in all methods):**
-1. **C21** - #1 in all three methods
-2. **C14** - Top 3 in all methods
-3. **C17** - Consistently high importance
-4. **C20** - Strong across methods
-5. **C18** - Validated by all three
-6. **C19** - Robust importance
-7. **device_conn_type** - Connection context matters
-
-**Additional Important Features:**
-- banner_pos (placement effect)
-- site_category and app_category (contextual relevance)
-- hour_of_day (temporal patterns)
 
 ---
 
