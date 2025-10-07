@@ -213,10 +213,10 @@ Delivered three comprehensive analysis sections:
 - subsample: 0.952
 
 **Random Forest Best Hyperparameters:**
-- n_estimators: 100
+- n_estimators: 121
 - max_depth: 10
-- min_samples_leaf: 4
-- min_samples_split: 2
+- min_samples_leaf: 7
+- min_samples_split: 10
 - max_features: sqrt
 
 This performance significantly outperforms random guessing (50% ROC-AUC) and provides meaningful predictive power for ad targeting optimization.
@@ -283,25 +283,25 @@ I implemented three complementary feature importance methods and identified **6 
 Using ML model scores to segment audiences into 4 tiers:
 
 **Premium (High Intent):**
-- Volume: 9,079 impressions (90.8% of total)
-- Actual CTR: **16.98%**
-- Estimated ROI: **240%**
+- Volume: 8,321 impressions (83.2% of total)
+- Actual CTR: **17.80%**
+- Estimated ROI: **256%**
 - Action: Increase bids by 50-100%
 
 **Standard:**
-- Volume: 705 impressions (7.0% of total)
+- Volume: 964 impressions (9.6% of total)
 - Actual CTR: **5.82%**
 - Estimated ROI: **16%**
 - Action: Maintain current bids
 
 **Low Priority:**
-- Volume: 212 impressions (2.1% of total)
-- Actual CTR: **1.89%**
-- Estimated ROI: **-62%**
+- Volume: 678 impressions (6.8% of total)
+- Actual CTR: **3.10%**
+- Estimated ROI: **-38%**
 - Action: Reduce bids by 50-70%
 
 **Avoid:**
-- Volume: 4 impressions (0.04% of total)
+- Volume: 37 impressions (0.4% of total)
 - Actual CTR: **0.00%**
 - Estimated ROI: **-100%**
 - Action: Exclude entirely
@@ -324,39 +324,6 @@ Top predictive features validated across three methods (Tree-based, Permutation,
 - banner_pos (placement effect)
 - site_category and app_category (contextual relevance)
 - hour_of_day (temporal patterns)
-
----
-
-## Business Recommendations
-
-#### 1. Time-Based Bid Optimization
-- **Action:** Increase bids by 20-30% for Hour 1:00 (19.60% CTR, Performance Index 116)
-- **Action:** Reduce bids by 20-30% for Hours 20:00 and 22:00 (15.17% and 15.00% CTR, Index 89)
-- **Expected Impact:** 9.0% overall CTR improvement by shifting 30% of budget
-
-#### 2. Device-Banner Position Prioritization
-- **Action:** Dramatically increase bids (50-100%) for top combinations:
-  - Device 1.0 + Banner Pos 3.0: 50.00% CTR
-  - Device 1.0 + Banner Pos 4.0: 37.50% CTR  
-  - Device 4.0 + Banner Pos 7.0: 35.29% CTR (51 impressions - statistically meaningful)
-- **Action:** Reduce/pause bottom performers:
-  - Device 4.0 + Banner Pos 1.0: 8.23% CTR (875 impressions)
-  - Device 5.0 + Banner Pos 1.0: 9.64% CTR (166 impressions)
-- **Expected Impact:** 25-40% CTR improvement
-
-#### 3. Tiered Predictive Targeting
-- **Action:** Implement ML-based audience segmentation:
-  - **Premium Tier (16.98% CTR, 240% ROI):** Increase bids 50-100%
-  - **Standard Tier (5.82% CTR, 16% ROI):** Maintain current bids
-  - **Low Priority (1.89% CTR, -62% ROI):** Reduce bids 50-70%
-  - **Avoid Tier (0.00% CTR, -100% ROI):** Exclude entirely
-- **Expected Impact:** 35-50% efficiency gain by eliminating waste
-
-#### 4. Connection-Type Optimization
-- **Action:** Prioritize high-performing connection-device pairs:
-  - Device 0.0 + Connection 0.0: 21.50% CTR
-  - Device 1.0 + Connection 0.0: 17.96% CTR
-- **Expected Impact:** 5-10% CTR improvement
 
 ---
 
