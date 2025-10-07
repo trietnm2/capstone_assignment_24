@@ -309,7 +309,7 @@ Using ML model scores to segment audiences into 4 tiers:
 **Actionable Insight:** Reallocate budget from Avoid tier to Premium tier for maximum ROI
 
 #### 5. Feature Importance - Cross-Method Validation
-Top predictive features validated across three methods (Tree-based MDI, Permutation, SHAP):
+Top predictive features validated across three methods (Tree-based, Permutation, SHAP):
 
 **Consensus Features (Top 10 in all methods):**
 1. **C21** - #1 in all three methods
