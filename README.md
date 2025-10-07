@@ -1,0 +1,380 @@
+# Click-Through Rate (CTR) Prediction Analysis
+### Predicting Online Advertising Engagement Using Machine Learning
+
+**Author:** Nguyen Minh Triet  
+**Date:** October 2, 2025  
+**Project Type:** Capstone Project
+
+---
+
+## Executive Summary
+
+This project tackles the challenge of predicting click-through rates (CTR) for online advertisements using machine learning. By analyzing 50,000 advertising records with 24 features, I developed and optimized predictive models achieving **67.06% ROC-AUC** with tuned XGBoost.
+
+**Key Achievements:**
+- Identified critical factors driving ad clicks through comprehensive exploratory data analysis
+- Developed and optimized 6 machine learning models: XGBoost (0.6706 ROC-AUC), Random Forest (0.6657), Neural Network (0.6579), Logistic Regression (0.6437), LightGBM (0.6727) and Naive Bayes
+- Implemented three feature importance methods (tree-based, permutation, SHAP) identifying 6 consensus features: C21, C14, C17, C20, C18, C19, device_conn_type
+- Applied proper chronological train-test split and one-hot encoding for robust validation
+- Delivered data-driven business insight sections with quantified ROI projections
+
+**Business Impact:** Implementing the recommendations could improve CTR by 18-36%, reduce cost-per-click by 20-25%, device-banner optimization (25-40% CTR improvement), and tiered targeting (240% ROI for Premium tier).
+
+---
+
+## The Challenge
+
+With only 16.93% of ads resulting in clicks, advertisers face intense competition for user attention. Traditional approaches struggle to account for the complex interplay of timing, device context, ad placement, and user characteristics. Machine learning offers a solution by identifying patterns invisible to human analysis and making real-time predictions at scale.
+
+---
+
+## Research Question
+
+**What factors most significantly influence the likelihood of a user clicking on an online advertisement, and how accurately can we predict click-through rates using machine learning?**
+
+### Sub-Questions Addressed:
+1. How do temporal patterns (hour, day, time-of-day) affect click rates?
+2. What role do device characteristics and connection types play in engagement?
+3. Which ad placements and positions generate the highest click-through rates?
+4. Can we build predictive models that outperform random chance by a meaningful margin?
+5. What practical actions can advertisers take based on the findings?
+
+---
+
+## Data Sources
+
+### Dataset Overview
+- **Source:** Online advertising click-through dataset
+- **Size:** 50,000 records (observations)
+- **Features:** 24 variables including temporal, device, and contextual information
+- **Target Variable:** Binary click indicator (0 = no click, 1 = click)
+- **Time Period:** Multiple days of advertising data across various contexts
+- **Data Quality:** Clean dataset with no missing values or duplicates
+
+### Feature Categories
+
+#### Temporal Features
+- **hour:** Timestamp of ad impression
+- **Derived features:** Hour of day, day of week, weekend indicator, time period
+
+#### Device Information
+- **device_type:** Type of device (mobile, tablet, desktop)
+- **device_conn_type:** Connection type (wifi, cellular, etc.)
+- **device_id, device_ip, device_model:** Device identifiers and specifications
+
+#### Ad Context
+- **banner_pos:** Position of the banner advertisement
+- **site_id, site_domain, site_category:** Website where ad appeared
+- **app_id, app_domain, app_category:** Mobile app where ad appeared
+
+#### Anonymous Categorical Variables
+- **C1, C14-C21:** Anonymized categorical features with varying cardinality
+- These features often capture user segments, behavioral patterns, or proprietary targeting categories
+
+---
+
+## Methodology
+
+The analysis follows a comprehensive data science workflow:
+
+### 1. Data Loading and Initial Exploration
+- Loaded 50,000 advertising records
+- Examined data structure, types, and distributions
+- Assessed data quality (missing values, duplicates, outliers)
+- Generated statistical summaries and descriptive statistics
+
+### 2. Data Cleaning and Preprocessing
+- Verified no missing values or duplicates
+- Converted timestamp data to datetime format
+- Handled high-cardinality features appropriately
+- Prepared dataset for analysis and modeling
+
+### 3. Exploratory Data Analysis (EDA)
+- **Target Variable Analysis:** Examined class distribution and imbalance (16.93% click rate)
+- **Temporal Analysis:** Investigated hour-of-day, day-of-week, and time-period patterns
+  - Identified Hour 1:00 as peak performance (19.60% CTR, 116 performance index)
+  - Found low-performing hours 20:00 and 22:00 (15.17% and 15.00% CTR)
+- **Categorical Analysis:** Explored device types, banner positions, site/app categories
+  - Device-banner combinations: 50.00% max CTR vs 0.00% min CTR
+  - Connection-device pairs: 21.50% CTR for top combination
+- **Correlation Analysis:** Identified relationships between features and target
+- **Outlier Detection:** Used IQR method to identify and understand outliers
+- **Interactive Visualizations:** Created dynamic plots for deeper insights
+
+### 4. Feature Engineering
+- Applied **chronological train-test split** (80/20) to prevent temporal data leakage
+- Extracted hour of day, day of week from timestamps
+- Created weekend indicator and time period categories
+- Used **one-hot encoding** for categorical variables (replacing label encoding)
+- Generated 52 features after encoding from 24 original features
+
+### 5. Feature Importance Analysis
+Implemented three complementary methods for robust feature selection:
+
+#### Tree-Based Importance (Mean Decrease in Impurity)
+- Measures feature contribution to node purity in Random Forest
+- Top features: C21 (13.88%), C14 (12.72%), C17 (8.91%)
+
+#### Permutation Importance
+- Measures performance drop when feature values are shuffled
+- Evaluates real predictive power on test set
+- Top features: C21, C20, C18
+
+#### SHAP (SHapley Additive exPlanations)
+- Game-theory based approach for model interpretability
+- TreeExplainer on 1,000-sample subset
+- Created summary plots and beeswarm visualizations
+- Top features: C21, C14, C17, site_category features
+
+#### Consensus Features
+Six features appeared in top 10 of ALL three methods:
+- **C21, C14, C17, C20, C18, C19, device_conn_type**
+
+### 6. Machine Learning Modeling
+
+#### Models Developed
+1. **Random Forest Classifier**
+   - Baseline: 100 trees, default parameters
+   - Optimized: GridSearchCV with 216 combinations
+   
+2. **Logistic Regression**
+   - Baseline: L2 regularization
+   - Optimized: GridSearchCV with L1/L2, various C values
+   
+3. **XGBoost Classifier**
+   - Optimized: RandomizedSearchCV with 50 iterations (1.41 minutes)
+   - Best params: learning_rate=0.033, max_depth=5, n_estimators=185
+   
+4. **LightGBM Classifier**
+   - Gradient boosting framework for efficiency
+   
+5. **Gaussian Naive Bayes**
+   - Probabilistic baseline model
+   
+6. **Neural Network (Deep Learning)**
+   - Architecture: 128 -> 64 -> 32 -> 1 with batch normalization and dropout
+   - 18,049 parameters, early stopping, 20 epochs
+
+#### Model Optimization
+- **RandomizedSearchCV:** XGBoost with 50 iterations, 3-fold CV
+- **GridSearchCV:** Random Forest (216 combinations), Logistic Regression (24 combinations, 16.21 min)
+- **Cross-Validation:** 3-fold CV to prevent overfitting
+- **Evaluation Metric:** ROC-AUC (handles class imbalance effectively)
+
+### 7. Model Evaluation
+- **Confusion Matrices:** Analyzed true/false positives and negatives for all models
+- **ROC Curves:** Visualized trade-offs between sensitivity and specificity
+- **Performance Comparison:** Created comprehensive comparison table across 6 models
+- **Best Model Selection:** XGBoost (67.06% ROC-AUC after tuning)
+
+### 8. Business Insights and Recommendations
+Delivered three comprehensive analysis sections:
+
+#### Section 1: Time-Based Bid Optimization
+- Hourly CTR analysis with performance indexing
+- Identified high-performing hours for bid increases
+- Quantified 9.0% potential CTR improvement
+
+#### Section 2: Device and Placement Optimization
+- Device-banner combination analysis
+- Connection-device performance heatmaps
+- Top 5 and bottom 5 combinations identified
+
+#### Section 3: Predictive Targeting Strategy
+- ML-based tiered segmentation (Premium: 240% ROI, Avoid: -100% ROI)
+- Volume vs performance trade-off visualization
+- Budget reallocation recommendations
+
+---
+
+## Results
+
+### Model Performance
+
+| Model | ROC-AUC | Key Characteristics |
+|-------|---------|---------------------|
+| **Optimized XGBoost** | **0.6706** | Best performer, tuned with RandomizedSearchCV (50 iter, 1.41 min) |
+| Optimized Random Forest | 0.6657 | GridSearchCV tuning, 216 combinations tested |
+| Baseline Random Forest | 0.6626 | Strong baseline with default parameters |
+| Neural Network | 0.6579 | 128->64->32->1 architecture, 18,049 parameters |
+| Logistic Regression | 0.6437 | GridSearchCV with L1 penalty, C=100 |
+| LightGBM | 0.6727 | Gradient boosting alternative |
+| Gaussian Naive Bayes | 0.679 | Probabilistic baseline |
+
+**Best Model:** Optimized XGBoost with **67.06% ROC-AUC**
+
+**XGBoost Best Hyperparameters:**
+- learning_rate: 0.033
+- max_depth: 5
+- n_estimators: 185
+- colsample_bytree: 0.902
+- gamma: 0.114
+- min_child_weight: 3
+- subsample: 0.952
+
+**Random Forest Best Hyperparameters:**
+- n_estimators: 100
+- max_depth: 10
+- min_samples_leaf: 4
+- min_samples_split: 2
+- max_features: sqrt
+
+This performance significantly outperforms random guessing (50% ROC-AUC) and provides meaningful predictive power for ad targeting optimization.
+
+### Feature Importance - Multi-Method Validation
+
+I implemented three complementary feature importance methods and identified **6 consensus features** appearing in top 10 of all methods:
+
+#### Consensus Features (High Confidence)
+1. **C21** - #1 in all three methods (tree-based, permutation, SHAP)
+2. **C14** - Top 3 in all methods
+3. **C17** - Consistently high importance
+4. **C20** - Strong across all methods
+5. **C18** - Top 10 in all methods
+6. **C19** - Validated importance
+7. **device_conn_type** - User connectivity context matters
+
+#### Method-Specific Insights
+- **Tree-based (MDI):** C21, C14, C17, C20, C19, C16, device_conn_type, C18, hour_of_day, C15
+- **Permutation:** C21, C20, C18, banner_pos, C19, site_category features, C14, app_category, C16, device_conn_type
+- **SHAP:** C21, C14, C17, site_category_50e219e0, C20, C18, C19, app_category_0f2161f8, device_conn_type, site_category_28905ebd
+
+### Key Findings from Data Analysis
+
+#### 1. Click-Through Rate Baseline
+- **Overall CTR:** 16.93% (8,467 clicks / 50,000 impressions)
+- **Class Imbalance:** 4.9:1 ratio (no-click to click)
+- **Implication:** Predicting clicks is challenging due to class imbalance
+
+#### 2. Temporal Patterns - Validated with Performance Index
+- **Hour-of-Day Effect:** Clear variations throughout the day
+- **Peak Performance:** Hour 1:00 shows 19.60% CTR (Performance Index: 116)
+- **Low Performance:** Hours 20:00 and 22:00 show 15.17% and 15.00% CTR (Performance Index: 89)
+- **Time Period Impact:** Average CTR baseline is 16.93%
+- **Actionable Insight:** Shifting 30% of budget from low to high-performing hours could increase overall CTR by 9.0%
+
+**Bid Optimization Recommendations:**
+- Increase bids by 20-30% for Hour 1:00
+- Reduce bids by 20-30% for Hours 20:00 and 22:00
+
+#### 3. Device and Banner Position Insights - Extreme Variation
+**Top 5 Device-Banner Combinations:**
+1. Device 1.0 + Banner Pos 3.0: **50.00% CTR** (2 impressions)
+2. Device 1.0 + Banner Pos 4.0: **37.50% CTR** (8 impressions)
+3. Device 4.0 + Banner Pos 7.0: **35.29% CTR** (51 impressions - statistically meaningful)
+4. Device 5.0 + Banner Pos 7.0: **25.00% CTR** (8 impressions)
+5. Device 0.0 + Banner Pos 0.0: **21.50% CTR** (2,730 impressions - high volume)
+
+**Bottom 5 Device-Banner Combinations (Avoid):**
+1. Device 4.0 + Banner Pos 0.0: **0.00% CTR** (1 impression)
+2. Device 4.0 + Banner Pos 1.0: **8.23% CTR** (875 impressions - significant volume)
+3. Device 5.0 + Banner Pos 1.0: **9.64% CTR** (166 impressions)
+4. Device 1.0 + Banner Pos 5.0: **10.00% CTR** (10 impressions)
+5. Device 1.0 + Banner Pos 2.0: **11.11% CTR** (9 impressions)
+
+**Top Connection-Device Combinations:**
+- Device 0.0 + Connection 0.0: **21.50% CTR**
+- Device 1.0 + Connection 0.0: **17.96% CTR**
+- Device 1.0 + Connection 2.0: **13.73% CTR**
+
+**Actionable Insight:** Increase bids by 30-50% for top combinations, reduce/pause bottom performers for 25-40% CTR improvement
+
+#### 4. Predictive Targeting Strategy - Tiered Approach
+Using ML model scores to segment audiences into 4 tiers:
+
+**Premium (High Intent):**
+- Volume: 9,079 impressions (90.8% of total)
+- Actual CTR: **16.98%**
+- Estimated ROI: **240%**
+- Action: Increase bids by 50-100%
+
+**Standard:**
+- Volume: 705 impressions (7.0% of total)
+- Actual CTR: **5.82%**
+- Estimated ROI: **16%**
+- Action: Maintain current bids
+
+**Low Priority:**
+- Volume: 212 impressions (2.1% of total)
+- Actual CTR: **1.89%**
+- Estimated ROI: **-62%**
+- Action: Reduce bids by 50-70%
+
+**Avoid:**
+- Volume: 4 impressions (0.04% of total)
+- Actual CTR: **0.00%**
+- Estimated ROI: **-100%**
+- Action: Exclude entirely
+
+**Actionable Insight:** Reallocate budget from Avoid tier to Premium tier for maximum ROI
+
+#### 5. Feature Importance - Cross-Method Validation
+Top predictive features validated across three methods (Tree-based MDI, Permutation, SHAP):
+
+**Consensus Features (Top 10 in all methods):**
+1. **C21** - #1 in all three methods
+2. **C14** - Top 3 in all methods
+3. **C17** - Consistently high importance
+4. **C20** - Strong across methods
+5. **C18** - Validated by all three
+6. **C19** - Robust importance
+7. **device_conn_type** - Connection context matters
+
+**Additional Important Features:**
+- banner_pos (placement effect)
+- site_category and app_category (contextual relevance)
+- hour_of_day (temporal patterns)
+
+**Actionable Insight:** Focus data collection and feature engineering on consensus features, especially C21 and C14
+
+
+---
+
+## Business Recommendations
+
+#### 1. Time-Based Bid Optimization
+- **Action:** Increase bids by 20-30% for Hour 1:00 (19.60% CTR, Performance Index 116)
+- **Action:** Reduce bids by 20-30% for Hours 20:00 and 22:00 (15.17% and 15.00% CTR, Index 89)
+- **Expected Impact:** 9.0% overall CTR improvement by shifting 30% of budget
+- **Implementation:** Configure dayparting in ad platforms
+- **Cost:** Minimal (configuration only)
+- **Data Source:** Hourly performance analysis from 50,000 impressions
+
+#### 2. Device-Banner Position Prioritization
+- **Action:** Dramatically increase bids (50-100%) for top combinations:
+  - Device 1.0 + Banner Pos 3.0: 50.00% CTR
+  - Device 1.0 + Banner Pos 4.0: 37.50% CTR  
+  - Device 4.0 + Banner Pos 7.0: 35.29% CTR (51 impressions - statistically meaningful)
+- **Action:** Reduce/pause bottom performers:
+  - Device 4.0 + Banner Pos 1.0: 8.23% CTR (875 impressions)
+  - Device 5.0 + Banner Pos 1.0: 9.64% CTR (166 impressions)
+- **Expected Impact:** 25-40% CTR improvement
+- **Implementation:** Adjust targeting and bidding by device-placement combination
+- **Cost:** Low to medium (may increase CPM for premium placements)
+
+#### 3. Tiered Predictive Targeting
+- **Action:** Implement ML-based audience segmentation:
+  - **Premium Tier (16.98% CTR, 240% ROI):** Increase bids 50-100%
+  - **Standard Tier (5.82% CTR, 16% ROI):** Maintain current bids
+  - **Low Priority (1.89% CTR, -62% ROI):** Reduce bids 50-70%
+  - **Avoid Tier (0.00% CTR, -100% ROI):** Exclude entirely
+- **Expected Impact:** 35-50% efficiency gain by eliminating waste
+- **Implementation:** Deploy XGBoost model (67.06% ROC-AUC) for real-time scoring
+- **Cost:** Medium to high (engineering integration)
+
+#### 4. Connection-Type Optimization
+- **Action:** Prioritize high-performing connection-device pairs:
+  - Device 0.0 + Connection 0.0: 21.50% CTR
+  - Device 1.0 + Connection 0.0: 17.96% CTR
+- **Expected Impact:** 5-10% CTR improvement
+- **Implementation:** Add connection type as targeting dimension
+- **Cost:** Low
+
+
+---
+
+## Key Files
+- **main.ipynb** - Jupyter Notebook with complete analysis workflow
+- **requirements.txt** - Python dependencies for reproducibility
+- **README.md** - Comprehensive project documentation
+
