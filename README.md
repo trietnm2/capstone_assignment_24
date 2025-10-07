@@ -225,7 +225,7 @@ This performance significantly outperforms random guessing (50% ROC-AUC) and pro
 
 I implemented three complementary feature importance methods and identified **6 consensus features** appearing in top 10 of all methods:
 
-#### Consensus Features (High Confidence)
+#### Consensus Features
 1. **C21** - #1 in all three methods (tree-based, permutation, SHAP)
 2. **C14** - Top 3 in all methods
 3. **C17** - Consistently high importance
