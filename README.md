@@ -113,7 +113,7 @@ Implemented three complementary methods for robust feature selection:
 
 #### Tree-Based Importance
 - Measures feature contribution to node purity in Random Forest
-- Top features: C21 (13.88%), C14 (12.72%), C17 (8.91%)
+- Top features: C21, C14, C17
 
 #### Permutation Importance
 - Measures performance drop when feature values are shuffled
@@ -124,25 +124,24 @@ Implemented three complementary methods for robust feature selection:
 - Game-theory based approach for model interpretability
 - TreeExplainer on 1,000-sample subset
 - Created summary plots and beeswarm visualizations
-- Top features: C21, C14, C17, site_category features
+- Top features: C21, C14, C17
 
 #### Consensus Features
 Six features appeared in top 10 of ALL three methods:
-- **C21, C14, C17, C20, C18, C19, device_conn_type**
+- **C21, C14, C20, C18, C19, device_conn_type**
 
 ### 6. Machine Learning Modeling
 
 #### Models Developed
 1. **Random Forest Classifier**
    - Baseline: 100 trees, default parameters
-   - Optimized: GridSearchCV with 216 combinations
+   - Optimized: RandomizedSearchCV with 50 iterations
    
 2. **Logistic Regression**
    - Baseline: L2 regularization
-   - Optimized: GridSearchCV with L1/L2, various C values
    
 3. **XGBoost Classifier**
-   - Optimized: RandomizedSearchCV with 50 iterations (1.41 minutes)
+   - Optimized: RandomizedSearchCV with 50 iterations
    - Best params: learning_rate=0.033, max_depth=5, n_estimators=185
    
 4. **LightGBM Classifier**
