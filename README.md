@@ -14,7 +14,7 @@ This project tackles the challenge of predicting click-through rates (CTR) for o
 **Key Achievements:**
 - Identified critical factors driving ad clicks through comprehensive exploratory data analysis
 - Developed and optimized 6 machine learning models: XGBoost (0.6706 ROC-AUC), Random Forest (0.6657), Neural Network (0.6579), Logistic Regression (0.6437), LightGBM (0.6727) and Naive Bayes
-- Implemented three feature importance methods (tree-based, permutation, SHAP) identifying 6 consensus features: C21, C14, C17, C20, C18, C19, device_conn_type
+- Implemented three feature importance methods (tree-based, permutation, SHAP) identifying 6 consensus features: C21, C14, C20, C18, C19, device_conn_type
 - Applied proper chronological train-test split and one-hot encoding for robust validation
 - Delivered data-driven business insight sections with quantified ROI projections
 
