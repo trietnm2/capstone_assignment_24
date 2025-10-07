@@ -199,7 +199,7 @@ Delivered three comprehensive analysis sections:
 | Neural Network | 0.6579 | 128->64->32->1 architecture, 18,049 parameters |
 | Logistic Regression | 0.6437 | GridSearchCV with L1 penalty, C=100 |
 | LightGBM | 0.6727 | Gradient boosting alternative |
-| Gaussian Naive Bayes | 0.679 | Probabilistic baseline |
+| Naive Bayes | 0.5069 | Probabilistic baseline |
 
 **Best Model:** Optimized XGBoost with **0.6706 ROC-AUC** and LightGBM with **0.6727 ROC-AUC**
 
