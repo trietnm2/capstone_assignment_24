@@ -9,7 +9,7 @@
 
 ## Executive Summary
 
-This project tackles the challenge of predicting click-through rates (CTR) for online advertisements using machine learning. By analyzing 50,000 advertising records with 24 features, I developed and optimized predictive models achieving **67.06% ROC-AUC** with tuned XGBoost.
+This project tackles the challenge of predicting click-through rates (CTR) for online advertisements using machine learning. By analyzing 50,000 advertising records with 24 features, I developed and optimized predictive models achieving **0.6706 ROC-AUC** with tuned XGBoost.
 
 **Key Achievements:**
 - Identified critical factors driving ad clicks through comprehensive exploratory data analysis
@@ -111,7 +111,7 @@ The analysis follows a comprehensive data science workflow:
 ### 5. Feature Importance Analysis
 Implemented three complementary methods for robust feature selection:
 
-#### Tree-Based Importance (Mean Decrease in Impurity)
+#### Tree-Based Importance
 - Measures feature contribution to node purity in Random Forest
 - Top features: C21 (13.88%), C14 (12.72%), C17 (8.91%)
 
@@ -165,7 +165,7 @@ Six features appeared in top 10 of ALL three methods:
 - **Confusion Matrices:** Analyzed true/false positives and negatives for all models
 - **ROC Curves:** Visualized trade-offs between sensitivity and specificity
 - **Performance Comparison:** Created comprehensive comparison table across 6 models
-- **Best Model Selection:** XGBoost (67.06% ROC-AUC after tuning)
+- **Best Model Selection:** XGBoost (0.6706 ROC-AUC after tuning)
 
 ### 8. Business Insights and Recommendations
 Delivered three comprehensive analysis sections:
@@ -201,7 +201,7 @@ Delivered three comprehensive analysis sections:
 | LightGBM | 0.6727 | Gradient boosting alternative |
 | Gaussian Naive Bayes | 0.679 | Probabilistic baseline |
 
-**Best Model:** Optimized XGBoost with **67.06% ROC-AUC**
+**Best Model:** Optimized XGBoost with **0.6706 ROC-AUC** and LightGBM with **0.6727 ROC-AUC**
 
 **XGBoost Best Hyperparameters:**
 - learning_rate: 0.033
@@ -325,9 +325,6 @@ Top predictive features validated across three methods (Tree-based, Permutation,
 - site_category and app_category (contextual relevance)
 - hour_of_day (temporal patterns)
 
-**Actionable Insight:** Focus data collection and feature engineering on consensus features, especially C21 and C14
-
-
 ---
 
 ## Business Recommendations
@@ -336,9 +333,6 @@ Top predictive features validated across three methods (Tree-based, Permutation,
 - **Action:** Increase bids by 20-30% for Hour 1:00 (19.60% CTR, Performance Index 116)
 - **Action:** Reduce bids by 20-30% for Hours 20:00 and 22:00 (15.17% and 15.00% CTR, Index 89)
 - **Expected Impact:** 9.0% overall CTR improvement by shifting 30% of budget
-- **Implementation:** Configure dayparting in ad platforms
-- **Cost:** Minimal (configuration only)
-- **Data Source:** Hourly performance analysis from 50,000 impressions
 
 #### 2. Device-Banner Position Prioritization
 - **Action:** Dramatically increase bids (50-100%) for top combinations:
@@ -349,8 +343,6 @@ Top predictive features validated across three methods (Tree-based, Permutation,
   - Device 4.0 + Banner Pos 1.0: 8.23% CTR (875 impressions)
   - Device 5.0 + Banner Pos 1.0: 9.64% CTR (166 impressions)
 - **Expected Impact:** 25-40% CTR improvement
-- **Implementation:** Adjust targeting and bidding by device-placement combination
-- **Cost:** Low to medium (may increase CPM for premium placements)
 
 #### 3. Tiered Predictive Targeting
 - **Action:** Implement ML-based audience segmentation:
@@ -359,17 +351,12 @@ Top predictive features validated across three methods (Tree-based, Permutation,
   - **Low Priority (1.89% CTR, -62% ROI):** Reduce bids 50-70%
   - **Avoid Tier (0.00% CTR, -100% ROI):** Exclude entirely
 - **Expected Impact:** 35-50% efficiency gain by eliminating waste
-- **Implementation:** Deploy XGBoost model (67.06% ROC-AUC) for real-time scoring
-- **Cost:** Medium to high (engineering integration)
 
 #### 4. Connection-Type Optimization
 - **Action:** Prioritize high-performing connection-device pairs:
   - Device 0.0 + Connection 0.0: 21.50% CTR
   - Device 1.0 + Connection 0.0: 17.96% CTR
 - **Expected Impact:** 5-10% CTR improvement
-- **Implementation:** Add connection type as targeting dimension
-- **Cost:** Low
-
 
 ---
 
